@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D Cube with TailwindCSS</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .scene {
+        width: 200px;
+        height: 200px;
+        perspective: 600px;
+      }
+      .cube {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        transform: rotateX(-30deg) rotateY(30deg);
+        transition: transform 1s;
+      }
+      .cube__face {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        border: 2px solid #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 60px;
+        color: #000;
+        background: rgba(255, 255, 255);
+      }
+      .front {
+        transform: rotateY(0deg) translateZ(100px);
+      }
+      .back {
+        transform: rotateY(180deg) translateZ(100px);
+      }
+      .right {
+        transform: rotateY(90deg) translateZ(100px);
+      }
+      .left {
+        transform: rotateY(-90deg) translateZ(100px);
+      }
+      .top {
+        transform: rotateX(90deg) translateZ(100px);
+      }
+      .bottom {
+        transform: rotateX(-90deg) translateZ(100px);
+      }
+    </style>
+  </head>
+  <body class="bg-gray-900 flex justify-center items-center h-screen">
+    <div class="absolute top-6 left-6">
+      <button id="button" class="text-gray-900 bg-white px-4 py-2">Role</button>
+    </div>
+    <div class="scene">
+      <div class="cube">
+        <div class="cube__face front">1</div>
+        <div class="cube__face back">6</div>
+        <div class="cube__face right">2</div>
+        <div class="cube__face left">5</div>
+        <div class="cube__face top">3</div>
+        <div class="cube__face bottom">4</div>
+      </div>
+    </div>
+
+    <script>
+      // Optional: Add interactivity with JavaScript
+      const cube = document.querySelector(".cube");
+      document.addEventListener("mousemove", function (e) {
+        const x = e.clientX / window.innerWidth - 0.5;
+        const y = e.clientY / window.innerHeight - 0.5;
+        cube.style.transform = `rotateX(${y * -540}deg) rotateY(${x * 540}deg)`;
+      });
+
+      const btn = document.getElementById("button");
+      btn.addEventListener("click", function (e) {
+        const yRand = Math.random() * 360 * 10;
+        const xRand = Math.random() * 360 * 10;
+        cube.style.transform = `rotateX(${xRand}deg) rotateY(${xRand}deg)`;
+      });
+    </script>
+  </body>
+</html>
